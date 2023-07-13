@@ -1,22 +1,20 @@
-export default defineNuxtRouteMiddleware((to) => {
+export default defineNuxtRouteMiddleware(async (to) => {
     const user = useSupabaseUser();
     const { checkUserInUsers } = useUtils();
 
     if ((to.path === "/" || to.path == "/setname") && !user.value) {
         return navigateTo("/login");
-    } else if (user.value && to.path === "/login") {
+    } else if (to.path === "/login" && (user.value != null)) {
         return navigateTo("/");
     } else if (to.path === "/" && user.value) {
-        checkUserInUsers(user.value.id).then((result) => {
-            if (!result) {
-                navigateTo("/setname");
-            }
-        });
+        const result = await checkUserInUsers(user.value.id);
+        if (!result) {
+            return navigateTo("/setname");
+        }
     } else if (to.path === "/setname" && user.value) {
-        checkUserInUsers(user.value.id).then((result) => {
-            if (result) {
-                navigateTo("/");
-            }
-        });
+        const result = await checkUserInUsers(user.value.id);
+        if (result) {
+            return navigateTo("/");
+        }
     }
 });
