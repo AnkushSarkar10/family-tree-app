@@ -17,11 +17,18 @@
     "@types/d3": "^7.4.0",
     "@types/node": "^18",
     "@types/uuid": "^9.0.2",
+    "@vueuse/nuxt": "^10.2.1",
     "nuxt": "^3.6.1"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.26.0",
+    "@types/d3-org-chart": "^2.6.3",
+    "@vueuse/components": "^10.2.1",
+    "@vueuse/core": "^10.2.1",
     "d3": "^7.8.5",
-    "uuid": "^9.0.0"
+    "d3-org-chart": "^2.7.0",
+    "uuid": "^9.0.0",
+    "v-network-graph": "^0.9.5",
+    "vue3-organization-chart": "^1.9.4"
   }
 }

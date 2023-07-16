@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Database } from "~~/types/public"
+
 definePageMeta({
   middleware: ['auth']
 })
@@ -14,10 +15,6 @@ const logout = () => {
   })
 }
 
-const container = ref(null)
-
-onMounted(() => {
-})
 const serverData = ref();
 const fetchUserFromServerRoute = async () => {
   const { data } = await useFetch('/api/getUsers', {
@@ -29,6 +26,36 @@ const fetchUserFromServerRoute = async () => {
 
 
 fetchUserFromServerRoute()
+
+const dataJson = {
+  name: "John Doe",
+  spouse: "Jane Smith",
+  children: [
+    {
+      name: "Alice Doe",
+      spouse: "Bob Johnson",
+      children: [
+        {
+          name: "Emily Johnson",
+          children: []
+        },
+        {
+          name: "Michael Johnson",
+          children: []
+        }
+      ]
+    },
+    {
+      name: "Eve Doe",
+      children: []
+    }
+  ]
+};
+
+onMounted(() => {
+
+})
+
 </script>
 
 <template>
@@ -43,6 +70,14 @@ fetchUserFromServerRoute()
 
     <h2>{{ serverData }}</h2>
     <button @click="makeFakeUser" class="bg-green-500 px-2 py-1 text-white font-medium rounded-md">Gen fake user</button>
-    <div ref="container"></div>
+
+    <ClientOnly fallback-tag="span" fallback="Loading comments...">
+      <node name="Ankush"/>
+      <!-- <Famtree :data="data" /> -->
+      <!-- <f-tree /> -->
+      <!-- <networktree/> -->
+      <!-- <v-org-chart-tree></v-org-chart-tree> -->
+      <d3-org-chart-tree></d3-org-chart-tree>
+    </ClientOnly>
   </div>
 </template>

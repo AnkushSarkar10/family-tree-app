@@ -9,37 +9,25 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      Family: {
+      family_members: {
         Row: {
-          father_id: string | null
-          mother_id: string | null
+          fid: string | null
+          name: string | null
           uid: string
         }
         Insert: {
-          father_id?: string | null
-          mother_id?: string | null
+          fid?: string | null
+          name?: string | null
           uid: string
         }
         Update: {
-          father_id?: string | null
-          mother_id?: string | null
+          fid?: string | null
+          name?: string | null
           uid?: string
         }
         Relationships: [
           {
-            foreignKeyName: "Family_father_id_fkey"
-            columns: ["father_id"]
-            referencedRelation: "Users"
-            referencedColumns: ["uid"]
-          },
-          {
-            foreignKeyName: "Family_mother_id_fkey"
-            columns: ["mother_id"]
-            referencedRelation: "Users"
-            referencedColumns: ["uid"]
-          },
-          {
-            foreignKeyName: "Family_uid_fkey"
+            foreignKeyName: "family_members_uid_fkey"
             columns: ["uid"]
             referencedRelation: "Users"
             referencedColumns: ["uid"]
@@ -48,25 +36,30 @@ export interface Database {
       }
       Users: {
         Row: {
+          children: string[] | null
+          father_id: string | null
+          mother_id: string | null
           Name: string
+          spouse_id: string | null
           uid: string
         }
         Insert: {
+          children?: string[] | null
+          father_id?: string | null
+          mother_id?: string | null
           Name: string
+          spouse_id?: string | null
           uid: string
         }
         Update: {
+          children?: string[] | null
+          father_id?: string | null
+          mother_id?: string | null
           Name?: string
+          spouse_id?: string | null
           uid?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "Users_uid_fkey"
-            columns: ["uid"]
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
+        Relationships: []
       }
     }
     Views: {
