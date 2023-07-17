@@ -11,18 +11,21 @@ export interface Database {
     Tables: {
       family_members: {
         Row: {
-          fid: string | null
+          id: number
           name: string | null
+          parentId: number | null
           uid: string
         }
         Insert: {
-          fid?: string | null
+          id?: number
           name?: string | null
+          parentId?: number | null
           uid: string
         }
         Update: {
-          fid?: string | null
+          id?: number
           name?: string | null
+          parentId?: number | null
           uid?: string
         }
         Relationships: [
@@ -36,27 +39,15 @@ export interface Database {
       }
       Users: {
         Row: {
-          children: string[] | null
-          father_id: string | null
-          mother_id: string | null
           Name: string
-          spouse_id: string | null
           uid: string
         }
         Insert: {
-          children?: string[] | null
-          father_id?: string | null
-          mother_id?: string | null
           Name: string
-          spouse_id?: string | null
           uid: string
         }
         Update: {
-          children?: string[] | null
-          father_id?: string | null
-          mother_id?: string | null
           Name?: string
-          spouse_id?: string | null
           uid?: string
         }
         Relationships: []

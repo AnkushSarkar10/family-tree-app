@@ -7,7 +7,7 @@ definePageMeta({
 
 const client = useSupabaseClient<Database>();
 const user = useSupabaseUser();
-const { makeFakeUser } = useUtils();
+const { makeFakeUser, fetchUserFamilyCsv } = useUtils();
 
 const logout = () => {
   client.auth.signOut().then(() => {
@@ -25,35 +25,11 @@ const fetchUserFromServerRoute = async () => {
 }
 
 
-fetchUserFromServerRoute()
-
-const dataJson = {
-  name: "John Doe",
-  spouse: "Jane Smith",
-  children: [
-    {
-      name: "Alice Doe",
-      spouse: "Bob Johnson",
-      children: [
-        {
-          name: "Emily Johnson",
-          children: []
-        },
-        {
-          name: "Michael Johnson",
-          children: []
-        }
-      ]
-    },
-    {
-      name: "Eve Doe",
-      children: []
-    }
-  ]
-};
-
+fetchUserFamilyCsv().then((dataFlattened) => {
+  serverData.value = dataFlattened
+})
 onMounted(() => {
-
+  console.log(serverData.value)
 })
 
 </script>
@@ -72,11 +48,7 @@ onMounted(() => {
     <button @click="makeFakeUser" class="bg-green-500 px-2 py-1 text-white font-medium rounded-md">Gen fake user</button>
 
     <ClientOnly fallback-tag="span" fallback="Loading comments...">
-      <node name="Ankush"/>
-      <!-- <Famtree :data="data" /> -->
-      <!-- <f-tree /> -->
-      <!-- <networktree/> -->
-      <!-- <v-org-chart-tree></v-org-chart-tree> -->
+      <!-- <node name="Ankush"/> -->
       <d3-org-chart-tree></d3-org-chart-tree>
     </ClientOnly>
   </div>
