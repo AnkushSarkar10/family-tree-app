@@ -13,14 +13,12 @@ const chart = ref();
 // https://github.com/bumbeishvili/org-chart/issues/24#issuecomment-1575060647
 
 fetchUserFamilyCsv().then((data) => {
-    console.log(data.value)
-
+    // console.log(data.value)
     parseCSV(data.value).then((dataFlattened) => {
-        console.log(dataFlattened)
+        // console.log(dataFlattened)
         chart.value = new OrgChart()
             .container(svgElementContainer.value)
             .data(dataFlattened)
-            .parentNodeId((d) => d.motherId || d.fatherId)
             .nodeHeight((d) => 90)
             .nodeWidth((d) => {
                 return 220;
@@ -50,38 +48,57 @@ fetchUserFamilyCsv().then((data) => {
                 }
             })
             .nodeContent(function (d, i, arr, state) {
-                const color = '#FFFFFF';
-                return `
-                        <div style="font-family: 'Inter', sans-serif;background-color:${color}; position:absolute;margin-top:-1px; margin-left:-1px;width:${d.width}px;height:${d.height}px;border-radius:10px;border: 1px solid #E4E2E9">
-                           <div style="background-color:${color};position:absolute;margin-top:-25px;margin-left:${15}px;border-radius:100px;width:50px;height:50px;" ></div>
-                           <img src=" ${'https://d32ogoqmya1dw8.cloudfront.net/images/serc/empty_user_icon_256.v2.png'
-                    }" style="position:absolute;margin-top:-35px;margin-left:${10}px;border-radius:100px;width:65px;height:65px;" />
-
-                          <div style="color:#08011E;position:absolute;right:20px;top:17px;font-size:10px;"><i class="fas fa-ellipsis-h"></i></div>
-
-                          <div style="font-size:15px;color:#08011E;margin-left:20px;margin-top:32px"> ${d.data.name
-                    } </div>
-                          <div style="color:#716E7B;margin-left:20px;margin-top:3px;font-size:10px;"> ${d.data.positionName
-                    } </div>
-                       </div>
-              `;
+                if (d.data.hasSpouse == "t") {
+                    console.log(d.data)
+                    const color = '#FFFFFF';
+                    return `
+                            <div style="font-family: 'Inter', sans-serif;background-color:${color}; position:absolute;margin-top:-1px; margin-left:-1px;width:${d.width}px;height:${d.height}px;border-radius:10px;border: 1px solid #E4E2E9">
+                               <div style="background-color:${color};position:absolute;margin-top:-25px;margin-left:${15}px;border-radius:100px;width:50px;height:50px;" ></div>
+                               <img src=" ${'https://d32ogoqmya1dw8.cloudfront.net/images/serc/empty_user_icon_256.v2.png'
+                        }" style="position:absolute;margin-top:-35px;margin-left:${10}px;border-radius:100px;width:65px;height:65px;" />
+    
+                              <div style="color:#08011E;position:absolute;right:20px;top:17px;font-size:10px;"><i class="fas fa-ellipsis-h"></i></div>
+    
+                              <div style="font-size:15px;color:#08011E;margin-left:20px;margin-top:32px"> ${d.data.name
+                        } </div>
+                              <div style="color:#716E7B;margin-left:20px;margin-top:3px;font-size:10px;"> ${d.data.positionName
+                        } </div>
+                           </div>
+                  `;
+                } else {
+                    const color = '#fffff2';
+                    return `
+                            <div style="font-family: 'Inter', sans-serif;background-color:${color}; position:absolute;margin-top:-1px; margin-left:-1px;width:${d.width}px;height:${d.height}px;border-radius:10px;border: 1px solid #E4E2E9">
+                               <div style="background-color:${color};position:absolute;margin-top:-25px;margin-left:${15}px;border-radius:100px;width:50px;height:50px;" ></div>
+                               <img src=" ${'https://d32ogoqmya1dw8.cloudfront.net/images/serc/empty_user_icon_256.v2.png'
+                        }" style="position:absolute;margin-top:-35px;margin-left:${10}px;border-radius:100px;width:65px;height:65px;" />
+    
+                              <div style="color:#08011E;position:absolute;right:20px;top:17px;font-size:10px;"><i class="fas fa-ellipsis-h"></i></div>
+    
+                              <div style="font-size:15px;color:#08011E;margin-left:20px;margin-top:32px"> ${d.data.name
+                        } </div>
+                              <div style="color:#716E7B;margin-left:20px;margin-top:3px;font-size:10px;"> ${d.data.positionName
+                        } </div>
+                           </div>
+                  `;
+                }
 
             })
             .onNodeClick((nodeid) => {
                 // console.log(nodeid);
             })
             .compact(false);
-        // changing the links for persons who has spouse
-        chart.layoutBindings().top.linkX = (d) => {
-            if (d.data.hasSpouse === undefined) {
-                return d.x;
-            } else if (d.data.gender === 'M') {
-                return d.x - linkShift;
-            } else {
-                return d.x + linkShift;
-            }
-        };
-        chart.value.render().fit();
+        // // changing the links for persons who has spouse
+        // chart.value.layoutBindings().top.linkX = (d) => {
+        //     if (d.data.hasSpouse === undefined) {
+        //         return d.x;
+        //     } else if (d.data.gender === 'M') {
+        //         return d.x - linkShift;
+        //     } else {
+        //         return d.x + linkShift;
+        //     }
+        // };
+        chart.value.render();
     })
 });
 
