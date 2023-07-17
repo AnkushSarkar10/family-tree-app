@@ -11,21 +11,36 @@ export interface Database {
     Tables: {
       family_members: {
         Row: {
+          gender: string
+          hasSpouse: boolean
           id: number
+          isUser: boolean
           name: string | null
           parentId: number | null
+          spouseGender: string | null
+          spouseName: string | null
           uid: string
         }
         Insert: {
+          gender?: string
+          hasSpouse?: boolean
           id?: number
+          isUser?: boolean
           name?: string | null
           parentId?: number | null
+          spouseGender?: string | null
+          spouseName?: string | null
           uid: string
         }
         Update: {
+          gender?: string
+          hasSpouse?: boolean
           id?: number
+          isUser?: boolean
           name?: string | null
           parentId?: number | null
+          spouseGender?: string | null
+          spouseName?: string | null
           uid?: string
         }
         Relationships: [

@@ -4,19 +4,23 @@ import * as d3 from "d3";
 
 const svgElementContainer = ref(null);
 const { fetchUserFamilyCsv, parseCSV } = useUtils();
+const chart = ref();
 
 // const data = d3.csv(
 //     'https://raw.githubusercontent.com/bumbeishvili/sample-data/main/org.csv'
 // ).then((dataFlattened) => {
+
+// https://github.com/bumbeishvili/org-chart/issues/24#issuecomment-1575060647
 
 fetchUserFamilyCsv().then((data) => {
     console.log(data.value)
 
     parseCSV(data.value).then((dataFlattened) => {
         console.log(dataFlattened)
-        new OrgChart()
+        chart.value = new OrgChart()
             .container(svgElementContainer.value)
             .data(dataFlattened)
+            .parentNodeId((d) => d.motherId || d.fatherId)
             .nodeHeight((d) => 90)
             .nodeWidth((d) => {
                 return 220;
@@ -66,9 +70,21 @@ fetchUserFamilyCsv().then((data) => {
             .onNodeClick((nodeid) => {
                 // console.log(nodeid);
             })
-            .render();
+            .compact(false);
+        // changing the links for persons who has spouse
+        chart.layoutBindings().top.linkX = (d) => {
+            if (d.data.hasSpouse === undefined) {
+                return d.x;
+            } else if (d.data.gender === 'M') {
+                return d.x - linkShift;
+            } else {
+                return d.x + linkShift;
+            }
+        };
+        chart.value.render().fit();
     })
 });
+
 
 </script>
 
