@@ -48,7 +48,7 @@ onMounted(() => {
     <button @click="makeFakeUser" class="bg-green-500 px-2 py-1 text-white font-medium rounded-md">Gen fake user</button>
 
     <ClientOnly fallback-tag="span" fallback="Loading comments...">
-      <!-- <node name="Ankush"/> -->
+      <node/>
       <d3-org-chart-tree></d3-org-chart-tree>
       <!-- <D3Tree/> -->
     </ClientOnly>

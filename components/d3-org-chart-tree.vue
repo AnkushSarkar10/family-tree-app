@@ -49,37 +49,36 @@ fetchUserFamilyCsv().then((data) => {
             })
             .nodeContent(function (d, i, arr, state) {
                 if (d.data.hasSpouse == "t") {
-                    console.log(d.data)
                     const color = '#FFFFFF';
+                    const spouseName = d.data.spouseName;
+                    const spouseGender = d.data.spouseGender;
                     return `
-                            <div style="font-family: 'Inter', sans-serif;background-color:${color}; position:absolute;margin-top:-1px; margin-left:-1px;width:${d.width}px;height:${d.height}px;border-radius:10px;border: 1px solid #E4E2E9">
-                               <div style="background-color:${color};position:absolute;margin-top:-25px;margin-left:${15}px;border-radius:100px;width:50px;height:50px;" ></div>
-                               <img src=" ${'https://d32ogoqmya1dw8.cloudfront.net/images/serc/empty_user_icon_256.v2.png'
-                        }" style="position:absolute;margin-top:-35px;margin-left:${10}px;border-radius:100px;width:65px;height:65px;" />
-    
-                              <div style="color:#08011E;position:absolute;right:20px;top:17px;font-size:10px;"><i class="fas fa-ellipsis-h"></i></div>
-    
-                              <div style="font-size:15px;color:#08011E;margin-left:20px;margin-top:32px"> ${d.data.name
-                        } </div>
-                              <div style="color:#716E7B;margin-left:20px;margin-top:3px;font-size:10px;"> ${d.data.positionName
-                        } </div>
-                           </div>
+                    <div class="relative flex gap-7 -translate-x-1/2 right-4">
+                        <div class="relative bg-[${color}] min-w-[${d.width}px] min-h-[${d.height}px] rounded-xl border border-solid border-[#E4E2E9]">
+                            <img src="https://d32ogoqmya1dw8.cloudfront.net/images/serc/empty_user_icon_256.v2.png"
+                                class="absolute -top-8 left-1 rounded-full w-16 h-w-16" />
+                            <div class="text-black text-lg font-semibold text-center mt-6">${d.data.name}</div>
+                            <div class="text-black text-sm font-extralight text-center">${d.data.isUser == 't' ? "You" : ""}</div>
+                            <hr class="w-7 h-[2px] bg-slate-200 absolute -right-7 -translate-y-1" />
+                        </div>
+                        
+                        <div class="relative bg-[${color}] min-w-[${d.width}px] min-h-[${d.height}px] rounded-xl border border-solid border-[#E4E2E9]">
+                            <img src="https://d32ogoqmya1dw8.cloudfront.net/images/serc/empty_user_icon_256.v2.png"
+                                class="absolute -top-8 left-1 rounded-full w-16 h-w-16" />
+                            <div class="text-black text-lg font-semibold text-center mt-6">${spouseName}</div>
+                            <div class="text-black text-sm font-extralight text-center">${d.data.isUser == 't' ? "You" : ""}</div>
+                        </div>
+                    </div>
                   `;
                 } else {
                     const color = '#fffff2';
                     return `
-                            <div style="font-family: 'Inter', sans-serif;background-color:${color}; position:absolute;margin-top:-1px; margin-left:-1px;width:${d.width}px;height:${d.height}px;border-radius:10px;border: 1px solid #E4E2E9">
-                               <div style="background-color:${color};position:absolute;margin-top:-25px;margin-left:${15}px;border-radius:100px;width:50px;height:50px;" ></div>
-                               <img src=" ${'https://d32ogoqmya1dw8.cloudfront.net/images/serc/empty_user_icon_256.v2.png'
-                        }" style="position:absolute;margin-top:-35px;margin-left:${10}px;border-radius:100px;width:65px;height:65px;" />
-    
-                              <div style="color:#08011E;position:absolute;right:20px;top:17px;font-size:10px;"><i class="fas fa-ellipsis-h"></i></div>
-    
-                              <div style="font-size:15px;color:#08011E;margin-left:20px;margin-top:32px"> ${d.data.name
-                        } </div>
-                              <div style="color:#716E7B;margin-left:20px;margin-top:3px;font-size:10px;"> ${d.data.positionName
-                        } </div>
-                           </div>
+                    <div class="relative bg-[${color}] min-w-[${d.width}px] min-h-[${d.height}px] rounded-xl border border-solid border-[#E4E2E9]">
+                        <img src="https://d32ogoqmya1dw8.cloudfront.net/images/serc/empty_user_icon_256.v2.png"
+                            class="absolute -top-8 left-1 rounded-full w-16 h-w-16" />
+                        <div class="text-black text-lg font-semibold text-center mt-6">${d.data.name}</div>
+                        <div class="text-black text-xs font-extralight text-center">${d.data.isUser == 't' ? "You" : ""}</div>
+                    </div>
                   `;
                 }
 
@@ -88,15 +87,10 @@ fetchUserFamilyCsv().then((data) => {
                 // console.log(nodeid);
             })
             .compact(false);
-        // // changing the links for persons who has spouse
+        // changing the links for persons who has spouse
+        // const linkShift = Math.round((320 + 10) / 2);
         // chart.value.layoutBindings().top.linkX = (d) => {
-        //     if (d.data.hasSpouse === undefined) {
-        //         return d.x;
-        //     } else if (d.data.gender === 'M') {
-        //         return d.x - linkShift;
-        //     } else {
-        //         return d.x + linkShift;
-        //     }
+        //     return 1000
         // };
         chart.value.render();
     })
