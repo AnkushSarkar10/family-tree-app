@@ -8,7 +8,7 @@ export default defineNuxtConfig({
             plugins: [require("@tailwindcss/forms")],
         },
     },
-    css: ["v-network-graph/lib/style.css"],
+    css: ["v-network-graph/lib/style.css", "vue-final-modal/style.css"],
     // routeRules: {
     //     '/': { ssr: false },
     // }

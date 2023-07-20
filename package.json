@@ -29,6 +29,7 @@
     "d3-org-chart": "^2.7.0",
     "uuid": "^9.0.0",
     "v-network-graph": "^0.9.5",
+    "vue-final-modal": "^4.4.4",
     "vue3-organization-chart": "^1.9.4"
   }
 }

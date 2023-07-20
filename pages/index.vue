@@ -29,7 +29,7 @@ fetchUserFamilyCsv().then((dataFlattened) => {
   serverData.value = dataFlattened
 })
 onMounted(() => {
-  console.log(serverData.value)
+  // console.log(serverData.value)
 })
 
 </script>
@@ -43,14 +43,11 @@ onMounted(() => {
     </div>
 
     <h1>Family Vista</h1>
-
-    <h2>{{ serverData }}</h2>
-    <button @click="makeFakeUser" class="bg-green-500 px-2 py-1 text-white font-medium rounded-md">Gen fake user</button>
-
+    <!-- <h2>{{ serverData }}</h2> -->
+    <!-- <button @click="makeFakeUser" class="bg-green-500 px-2 py-1 text-white font-medium rounded-md">Gen fake user</button> -->
+    
     <ClientOnly fallback-tag="span" fallback="Loading comments...">
-      <node/>
       <d3-org-chart-tree></d3-org-chart-tree>
-      <!-- <D3Tree/> -->
     </ClientOnly>
   </div>
 </template>

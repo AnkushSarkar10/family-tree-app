@@ -57,12 +57,32 @@ export const useUtils = () => {
         });
     };
 
-    // const getNodeData()
+    const getModalData = (data: any) => {
+        // console.log(data);
+        if (data.parentId == "" && data.hasSpouse == "f") {
+            // add Parent
+            // add spouce
+            // add Child
+            // edit node
+            return "can add parent, spouce, child";
+            // console.log("can add parent, spouce, child");
+        } else if (data.hasSpouse == "f") {
+            // add Child
+            // add spouce
+            // edit node
+            return "can add, spouce, child";
+        } else {
+            // add Child
+            // edit node
+            return "can add child";
+        }
+    };
 
     return {
         checkUserInUsers,
         makeFakeUser,
         fetchUserFamilyCsv,
         parseCSV,
+        getModalData,
     };
 };
