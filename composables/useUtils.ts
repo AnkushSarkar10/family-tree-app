@@ -1,6 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import { faker } from "@faker-js/faker";
 import { Database } from "~~/types/public";
+import Modal from "../components/Modal.vue";
+import { useModal } from "vue-final-modal";
 
 export const useUtils = () => {
     const client = useSupabaseClient<Database>();
@@ -57,25 +59,40 @@ export const useUtils = () => {
         });
     };
 
-    const getModalData = (data: any) => {
-        // console.log(data);
+    const addParent = (d :any) => {}
+    const addSpouce = (d :any) => {}
+    const addChild = (d :any) => {}
+    const editNode = (d :any) => {}
+
+    const nodeClickHandler = (data: any) => {
+        let modalData = "";
+        let config = {
+            canAddParent: false,
+            canAddSpouce: false,
+        };
         if (data.parentId == "" && data.hasSpouse == "f") {
-            // add Parent
-            // add spouce
-            // add Child
-            // edit node
-            return "can add parent, spouce, child";
-            // console.log("can add parent, spouce, child");
+            modalData = "can add parent, spouce, child";
+            config.canAddParent = true;
+            config.canAddSpouce = true;
         } else if (data.hasSpouse == "f") {
-            // add Child
-            // add spouce
-            // edit node
-            return "can add, spouce, child";
+            modalData = "can add, spouce, child";
+            config.canAddSpouce = true;
         } else {
-            // add Child
-            // edit node
-            return "can add child";
+            modalData = "can add child";
         }
+
+        const { open, close } = useModal({
+            component: Modal,
+            attrs: {
+                title: modalData,
+                config: config,
+                data: data,
+                onConfirm() {
+                    close();
+                },
+            },
+        });
+        open();
     };
 
     return {
@@ -83,6 +100,6 @@ export const useUtils = () => {
         makeFakeUser,
         fetchUserFamilyCsv,
         parseCSV,
-        getModalData,
+        nodeClickHandler,
     };
 };
