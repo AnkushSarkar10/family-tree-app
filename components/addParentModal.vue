@@ -31,8 +31,6 @@ const addParent = async () => {
         .update({ parentId: data[0].id })
         .match({ uid: props.data.uid, id: props.data.id })
     if (error) throw error
-
-
     reloadNuxtApp()
 }
 </script>

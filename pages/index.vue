@@ -1,4 +1,7 @@
 <script setup lang="ts">
+useHead({
+  title: 'Famili Vistas',
+})
 
 definePageMeta({
   middleware: ['auth']
