@@ -66,7 +66,8 @@ onMounted(() => {
 
           <div class="relative">
             <input v-model="formData.email" type="email" required id="email" name="email"
-              class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm focus:outline-none focus:ring-teal-600 focus:border-teal-500" placeholder="Enter email" />
+              class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm focus:outline-none focus:ring-teal-600 focus:border-teal-500"
+              placeholder="Enter email" />
 
             <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24"
