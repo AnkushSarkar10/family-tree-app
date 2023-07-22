@@ -13,11 +13,8 @@ export default defineNuxtConfig({
             plugins: [require("@tailwindcss/forms")],
         },
     },
-    css: ["v-network-graph/lib/style.css", "vue-final-modal/style.css"],
+    css: ["vue-final-modal/style.css"],
     routeRules: {
         '/*': { cors: true },
     }
-    // routeRules: {
-    //     '/': { ssr: false },
-    // }
 });
