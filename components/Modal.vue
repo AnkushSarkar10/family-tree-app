@@ -4,12 +4,25 @@ import addSpouceModal from './addSpouceModal.vue';
 import addParentModal from './addParentModal.vue';
 import addChildModal from './addChildModal.vue';
 import editNodeModal from './editNodeModal.vue'
+interface Iconfig {
+    canAddParent: boolean;
+    canAddSpouce: boolean;
+}
+
+const props = defineProps<{
+    title?: string,
+    config: Iconfig,
+    data: any
+}>()
+
+const emit = defineEmits<{
+    (e: 'confirm'): void
+}>()
+
 
 const openAddSpouceModal = () => {
     const { open, close } = useModal({
         component: addSpouceModal,
-        // childData: ,
-        // parentData:,
         attrs: {
             title: "spouce",
             data: props.data,
@@ -25,6 +38,7 @@ const openAddParentModal = () => {
         component: addParentModal,
         attrs: {
             title: "parent",
+            data: props.data,
             onConfirm() {
                 close();
             },
@@ -37,6 +51,7 @@ const openAddChildModal = () => {
         component: addChildModal,
         attrs: {
             title: "child",
+            data: props.data,
             onConfirm() {
                 close();
             },
@@ -49,6 +64,7 @@ const openEditNodeModal = () => {
         component: editNodeModal,
         attrs: {
             title: "edit",
+            data: props.data,
             onConfirm() {
                 close();
             },
@@ -57,20 +73,7 @@ const openEditNodeModal = () => {
     open();
 }
 
-interface Iconfig {
-    canAddParent: boolean;
-    canAddSpouce: boolean;
-}
 
-const props = defineProps<{
-    title?: string,
-    config: Iconfig,
-    data: any
-}>()
-
-const emit = defineEmits<{
-    (e: 'confirm'): void
-}>()
 </script>
 
 <template>
@@ -81,35 +84,38 @@ const emit = defineEmits<{
         </h1>
         <div class="flex flex-wrap items-center justify-center gap-5 py-6 mx-4 ">
             <div v-if="config?.canAddSpouce"
-                class="group relative inline-block text-sm font-medium text-green-600 focus:outline-none focus:ring active:text-green-500">
+                class="group relative inline-block text-sm font-medium text-teal-600 focus:outline-none focus:ring active:text-teal-500">
                 <span
-                    class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-green-600 transition-transform group-hover:translate-y-0 group-hover:translate-x-0"></span>
+                    class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-teal-600 transition-transform group-hover:translate-y-0 group-hover:translate-x-0"></span>
                 <button @click="openAddSpouceModal"
                     class="relative block border border-current bg-white px-5 py-2 font-bold">
                     <Icon name="material-symbols:add-rounded" color="#16a34a" class="text-lg mr-1" />Add Spouce
                 </button>
             </div>
             <div v-if="config?.canAddParent"
-                class="group relative inline-block text-sm font-medium text-green-600 focus:outline-none focus:ring active:text-green-500">
+                class="group relative inline-block text-sm font-medium text-teal-600 focus:outline-none focus:ring active:text-teal-500">
                 <span
-                    class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-green-600 transition-transform group-hover:translate-y-0 group-hover:translate-x-0"></span>
-                <button @click="openAddParentModal" class="relative block border border-current bg-white px-5 py-2 font-bold">
+                    class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-teal-600 transition-transform group-hover:translate-y-0 group-hover:translate-x-0"></span>
+                <button @click="openAddParentModal"
+                    class="relative block border border-current bg-white px-5 py-2 font-bold">
                     <Icon name="material-symbols:add-rounded" color="#16a34a" class="text-lg mr-1" />Add Parent
                 </button>
             </div>
             <div
-                class="group relative inline-block text-sm font-medium text-green-600 focus:outline-none focus:ring active:text-green-500">
+                class="group relative inline-block text-sm font-medium text-teal-600 focus:outline-none focus:ring active:text-teal-500">
                 <span
-                    class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-green-600 transition-transform group-hover:translate-y-0 group-hover:translate-x-0"></span>
-                <button @click="openAddChildModal" class="relative block border border-current bg-white px-5 py-2 font-bold">
+                    class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-teal-600 transition-transform group-hover:translate-y-0 group-hover:translate-x-0"></span>
+                <button @click="openAddChildModal"
+                    class="relative block border border-current bg-white px-5 py-2 font-bold">
                     <Icon name="material-symbols:add-rounded" color="#16a34a" class="text-lg mr-1" />Add Child
                 </button>
             </div>
             <div
-                class="group relative inline-block text-sm font-medium text-green-600 focus:outline-none focus:ring active:text-green-500">
+                class="group relative inline-block text-sm font-medium text-teal-600 focus:outline-none focus:ring active:text-teal-500">
                 <span
-                    class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-green-600 transition-transform group-hover:translate-y-0 group-hover:translate-x-0"></span>
-                <button @click="openEditNodeModal" class="relative block border border-current bg-white px-5 py-2 font-bold">
+                    class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-teal-600 transition-transform group-hover:translate-y-0 group-hover:translate-x-0"></span>
+                <button @click="openEditNodeModal"
+                    class="relative block border border-current bg-white px-5 py-2 font-bold">
                     <Icon name="ic:outline-edit" color="#16a34a" class="text-lg mr-1" />Edit Node
                 </button>
             </div>

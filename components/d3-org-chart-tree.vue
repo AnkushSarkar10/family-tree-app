@@ -55,10 +55,9 @@ fetchUserFamilyCsv().then((data) => {
 
                 if (d.data.hasSpouse == "t") {
                     const spouseName = d.data.spouseName;
-                    // if (d.data.gender == "M") {
                         nodeHtml += `
                         <div class="relative flex gap-7 -translate-x-1/2 -right-14">
-                            <div class="relative bg-white hover:bg-sky-100 ${spouceNodeWidth} ${nodeHeight} rounded-xl border border-solid ${d.data.gender == 'M' ? "border-red-500" : "border-blue-500"}">
+                            <div class="relative shadow-md bg-white hover:bg-sky-100 ${spouceNodeWidth} ${nodeHeight} px-1 rounded-md border border-solid ${d.data.gender == 'M' ? "border-red-500" : "border-blue-500"}">
                                 <img src="https://d32ogoqmya1dw8.cloudfront.net/images/serc/empty_user_icon_256.v2.png"
                                     class="absolute -top-8 left-1 rounded-full w-16 h-w-16" />
                                 <div class="text-black text-lg font-semibold text-center mt-6">${d.data.name}</div>
@@ -66,38 +65,17 @@ fetchUserFamilyCsv().then((data) => {
                                 <hr class="pointer-events-none w-7 h-[1.3px] bg-slate-200 absolute -right-7 -translate-y-1" />
                             </div>
                             
-                            <div class="relative bg-white ${spouceNodeWidth} ${nodeHeight} rounded-xl border border-solid ${d.data.spouseGender == 'M' ? "border-red-500" : "border-blue-500"}">
+                            <div class="relative shadow-md bg-white ${spouceNodeWidth} ${nodeHeight} px-1 rounded-md border border-solid ${d.data.spouseGender == 'M' ? "border-red-500" : "border-blue-500"}">
                                 <img src="https://d32ogoqmya1dw8.cloudfront.net/images/serc/empty_user_icon_256.v2.png"
                                     class="absolute -top-8 left-1 rounded-full w-16 h-w-16" />
                                 <div class="text-black text-lg font-semibold text-center mt-6">${spouseName}</div>
-                                <div class="text-black text-sm font-extralight text-center">${d.data.isUser == 't' ? "You" : ""}</div>
                             </div>
                         </div>
                   `;
-                //     } else {
-                //         nodeHtml += `
-                //         <div class="relative flex gap-7 -translate-x-1/2 -right-1">
-                //             <div class="relative bg-white hover:bg-sky-100 ${spouceNodeWidth} ${nodeHeight} rounded-xl border border-solid ${d.data.spouseGender == 'M' ? "border-red-500" : "border-blue-500"}">
-                //                 <img src="https://d32ogoqmya1dw8.cloudfront.net/images/serc/empty_user_icon_256.v2.png"
-                //                     class="absolute -top-8 left-1 rounded-full w-16 h-w-16" />
-                //                 <div class="text-black text-lg font-semibold text-center mt-6">${spouseName}</div>
-                //                 <div class="text-black text-sm font-extralight text-center">${d.data.isUser == 't' ? "You" : ""}</div>
-                //                 <hr class="pointer-events-none w-7 h-[1.3px] bg-slate-200 absolute -right-7 -translate-y-1" />
-                //             </div>
-                            
-                //             <div class="relative bg-white hover:bg-sky-100 ${spouceNodeWidth} ${nodeHeight} rounded-xl border border-solid ${d.data.gender == 'M' ? "border-red-500" : "border-blue-500"}">
-                //                 <img src="https://d32ogoqmya1dw8.cloudfront.net/images/serc/empty_user_icon_256.v2.png"
-                //                     class="absolute -top-8 left-1 rounded-full w-16 h-w-16" />
-                //                 <div class="text-black text-lg font-semibold text-center mt-6">${d.data.name}</div>
-                //                 <div class="text-black text-sm font-extralight text-center">${d.data.isUser == 't' ? "You" : ""}</div>
-                //             </div>
-                //         </div>
-                //   `;
-                //     }
 
                 } else {
                     nodeHtml += `
-                    <div class="relative bg-white hover:bg-sky-100 ${nodeWidth} ${nodeHeight} rounded-xl border border-solid ${d.data.gender == 'M' ? "border-red-500" : "border-blue-500"}">
+                    <div class="relative shadow-md bg-white hover:bg-sky-100 ${nodeWidth} ${nodeHeight} rounded-md border border-solid ${d.data.gender == 'M' ? "border-red-500" : "border-blue-500"}">
                         <img src="https://d32ogoqmya1dw8.cloudfront.net/images/serc/empty_user_icon_256.v2.png"
                             class="absolute -top-8 left-1 rounded-full w-16 h-w-16" />
                         <div class="text-black text-lg font-semibold text-center mt-6">${d.data.name}</div>
@@ -117,7 +95,7 @@ fetchUserFamilyCsv().then((data) => {
             .compact(false);
 
         // changing the links for persons who has spouse
-        const linkShift = 120;
+        const linkShift = 70;
         chart.value.layoutBindings().top.linkX = (d) => {
             if (d.data.hasSpouse == 'f') {
                 return d.x;

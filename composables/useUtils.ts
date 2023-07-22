@@ -59,32 +59,23 @@ export const useUtils = () => {
         });
     };
 
-    const addParent = (d :any) => {}
-    const addSpouce = (d :any) => {}
-    const addChild = (d :any) => {}
-    const editNode = (d :any) => {}
-
     const nodeClickHandler = (data: any) => {
         let modalData = "";
         let config = {
             canAddParent: false,
             canAddSpouce: false,
         };
-        if (data.parentId == "" && data.hasSpouse == "f") {
-            modalData = "can add parent, spouce, child";
+        console.log(data.parentId)
+        if (data.parentId == '') {
             config.canAddParent = true;
+        }
+        if (data.hasSpouse == "f") {
             config.canAddSpouce = true;
-        } else if (data.hasSpouse == "f") {
-            modalData = "can add, spouce, child";
-            config.canAddSpouce = true;
-        } else {
-            modalData = "can add child";
         }
 
         const { open, close } = useModal({
             component: Modal,
             attrs: {
-                title: modalData,
                 config: config,
                 data: data,
                 onConfirm() {
