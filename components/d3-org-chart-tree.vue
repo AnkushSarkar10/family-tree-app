@@ -2,11 +2,28 @@
 import { OrgChart } from 'd3-org-chart';
 import * as d3 from "d3";
 import { ModalsContainer } from 'vue-final-modal'
+import { jsPDF } from "jspdf";
 
 const svgElementContainer = ref(null);
 const { fetchUserFamilyCsv, parseCSV, nodeClickHandler } = useUtils();
 const chart = ref();
 
+const downloadPdf = () => {
+    console.log('get pdf')
+    chart.value.exportImg({
+        save: false,
+        onLoad: (base64 => {
+            var pdf = new jsPDF();
+            var img = new Image()
+            img.src = base64;
+            img.onload = function () {
+                pdf.addImage(img, 'JPEG', 5, 5, 595 / 3, img.height / img.width * 595 / 3);
+                pdf.save('tree.pdf');
+            }
+        })
+    })
+
+}
 // const data = d3.csv(
 //     'https://raw.githubusercontent.com/bumbeishvili/sample-data/main/org.csv'
 // ).then((dataFlattened) => {
@@ -55,10 +72,10 @@ fetchUserFamilyCsv().then((data) => {
 
                 if (d.data.hasSpouse == "t") {
                     const spouseName = d.data.spouseName;
-                        nodeHtml += `
+                    nodeHtml += `
                         <div class="relative flex gap-7 -translate-x-1/2 -right-14">
                             <div class="relative shadow-md bg-white hover:bg-sky-100 ${spouceNodeWidth} ${nodeHeight} px-1 rounded-md border border-solid ${d.data.gender == 'M' ? "border-red-500" : "border-blue-500"}">
-                                <img src="https://d32ogoqmya1dw8.cloudfront.net/images/serc/empty_user_icon_256.v2.png"
+                                <img src="/empty_user.png"
                                     class="absolute -top-8 left-1 rounded-full w-16 h-w-16" />
                                 <div class="text-black text-lg font-semibold text-center mt-6">${d.data.name}</div>
                                 <div class="text-black text-sm font-extralight text-center">${d.data.isUser == 't' ? "You" : ""}</div>
@@ -66,7 +83,7 @@ fetchUserFamilyCsv().then((data) => {
                             </div>
                             
                             <div class="relative shadow-md bg-white ${spouceNodeWidth} ${nodeHeight} px-1 rounded-md border border-solid ${d.data.spouseGender == 'M' ? "border-red-500" : "border-blue-500"}">
-                                <img src="https://d32ogoqmya1dw8.cloudfront.net/images/serc/empty_user_icon_256.v2.png"
+                                <img src="/empty_user.png"
                                     class="absolute -top-8 left-1 rounded-full w-16 h-w-16" />
                                 <div class="text-black text-lg font-semibold text-center mt-6">${spouseName}</div>
                             </div>
@@ -76,7 +93,7 @@ fetchUserFamilyCsv().then((data) => {
                 } else {
                     nodeHtml += `
                     <div class="relative shadow-md bg-white hover:bg-sky-100 ${nodeWidth} ${nodeHeight} rounded-md border border-solid ${d.data.gender == 'M' ? "border-red-500" : "border-blue-500"}">
-                        <img src="https://d32ogoqmya1dw8.cloudfront.net/images/serc/empty_user_icon_256.v2.png"
+                        <img src="/empty_user.png"
                             class="absolute -top-8 left-1 rounded-full w-16 h-w-16" />
                         <div class="text-black text-lg font-semibold text-center mt-6">${d.data.name}</div>
                         <div class="text-black text-xs font-extralight text-center">${d.data.isUser == 't' ? "You" : ""}</div>
@@ -92,7 +109,8 @@ fetchUserFamilyCsv().then((data) => {
                     }
                 });
             })
-            .compact(false);
+            .compact(false)
+            .defaultFont('Inter');
 
         // changing the links for persons who has spouse
         const linkShift = 70;
@@ -106,7 +124,7 @@ fetchUserFamilyCsv().then((data) => {
             }
         };
 
-        chart.value.render().expandAll().fit();
+        chart.value.render().expandAll();
     })
 });
 
@@ -115,7 +133,24 @@ fetchUserFamilyCsv().then((data) => {
 
 <template>
     <ModalsContainer />
-    <div ref="svgElementContainer" class="h-full w-full border"></div>
+    <div class="relative w-full h-screen overflow-hidden">
+        <div ref="svgElementContainer" class="relative h-screen z-10"></div>
+        <div class="absolute right-20 bottom-20 flex flex-col gap-4 justify-center items-center">
+            <button @click="chart.zoomIn()" class="z-20">
+                <Icon name="carbon:add-alt" color="black" class="text-xl md:text-5xl" />
+            </button>
+            <button @click="chart.zoomOut()" class="z-20">
+                <Icon name="carbon:subtract-alt" color="black" class="text-xl md:text-5xl" />
+            </button>
+            <button @click="chart.fit()" class="z-20">
+                <Icon name="material-symbols:fit-screen-outline-sharp" color="black" class="text-xl md:text-5xl" />
+            </button>
+            <button @click="downloadPdf" class="z-20">
+                <Icon name="carbon:document-pdf" color="black" class="text-xl md:text-5xl" />
+            </button>
+        </div>
+        <img src="/dots.jpg" class="absolute h-screen w-full top-0 left-0 opacity-5">
+    </div>
 </template>
 
 <style scoped></style>
